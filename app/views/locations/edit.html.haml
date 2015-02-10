@@ -1,0 +1,10 @@
+.col-md-6.col-md-offset-3  
+  .text-center
+    %h2
+      Edit Location
+    = link_to "Cancel", locations_path(@location)
+.row
+  .col-md-6.col-md-offset-3
+    = render 'form'
+    %br
+    %br

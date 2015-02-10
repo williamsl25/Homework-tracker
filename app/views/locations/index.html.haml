@@ -1,0 +1,17 @@
+= link_to 'Welcome', root_path 
+.col-md-6.col-md-offset-3
+  .text-center
+    %h2
+      Locations 
+      %br
+    = link_to "Add a Location", new_location_path
+- @locations.each do |location|
+  .col-md-4
+    .list-group-item
+      .text-center
+        = link_to location.name, location_path(location)
+        %br
+        = link_to 'Edit', edit_location_path(location)
+        %br
+        = link_to 'Delete location', location_path(location), method: :delete
+        %br 

@@ -1,0 +1,29 @@
+= form_for [@location, @course] do |f|
+  - if @course.errors.any?
+    - @patient.errors.full_messages.each do |message|
+      = message
+      %br
+.div
+  = form_for [@location, @course] do |f|
+    .form-group
+      %strong= f.label :name
+      = f.text_field :name, class: "form-control name_field"
+      %span.error_first_name
+        Name required
+    %br
+    .form-group
+      = f.label :description
+      = f.text_field :description, class: "form-control"
+    %br
+    .list-group-item
+      %strong
+        Add Locations to Course:
+        %br
+      .checkbox
+        - @locations.each do |location|
+          %label
+            = check_box_tag 'course[location_ids][]', location.id, @course.locations.include?(location)
+            = location.name 
+          %br
+      = f.submit "Submit", class: "submit_btn"
+      = link_to "Cancel", courses_path

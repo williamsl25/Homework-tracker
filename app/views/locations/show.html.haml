@@ -1,0 +1,21 @@
+.col-md-6.col-md-offset-3  
+  .text-center
+    %h2
+      Location Information
+    = link_to "Back to locations", locations_path
+    %br
+    = link_to "Edit", edit_location_path(@location)
+    |
+    = link_to "Delete", location_path(@location), method: :delete
+   
+.row
+  .col-md-6.col-md-offset-3
+    .list-group-item
+      .text-center
+        %h3
+        %strong
+          = @location.name
+          %br
+          %strong
+          = @location.address
+          %br

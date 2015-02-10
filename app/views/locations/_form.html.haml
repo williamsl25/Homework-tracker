@@ -1,0 +1,20 @@
+
+= form_for @location do |f|
+  - if @location.errors.any?
+    - @location.errors.full_messages.each do |message|
+      = message
+      %br
+
+= form_for [@location] do |f|
+  .form-group
+    %strong= f.label :name
+    = f.text_field :name, class: "form-control"
+  .form-group
+    %strong= f.label :address
+    = f.text_field :address, class: "form-control"
+  
+  %br
+  .col-md-1.col-md-offset-4
+  =f.submit "Submit", class: "btn btn-primary"
+      
+  = link_to "Cancel", root_path

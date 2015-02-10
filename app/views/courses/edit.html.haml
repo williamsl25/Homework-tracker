@@ -1,0 +1,12 @@
+
+
+.col-md-6.col-md-offset-3 
+  .text-center
+    %h2
+      Edit Course
+    =link_to "Cancel", course_path(@course)
+%br
+.row
+  .col-md-6.col-md-offset-3
+    =render 'form'
+%br
