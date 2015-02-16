@@ -1,6 +1,6 @@
 = form_for [@location, @course] do |f|
   - if @course.errors.any?
-    - @patient.errors.full_messages.each do |message|
+    - @course.errors.full_messages.each do |message|
       = message
       %br
 .div

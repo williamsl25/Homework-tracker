@@ -1,0 +1,18 @@
+.col-md-6.col-md-offset-3
+  .text-center
+    %h2
+      "#{@assignment.name} Homework Submissions"
+      %br
+    = link_to "Add a submission", new_assignment_submission_path(@assignment, @submission)
+- @submissions.each do |submission|
+  .col-md-4
+    .list-group-item
+      .text-center
+        = link_to submission.name, assignment_submission_path(@assignment, submission)
+        %br
+        = link_to "Edit submisssion", edit_assignment_submission_path(@assignment, submission)
+        |
+        = link_to "Delete submisssion", assignment_submissions_path(@assignment), method: :delete
+        %br
+  / all the submissions show up-not just the submissions for the specific assignment.  If you click the links for the submissions, they work for the correct assignment, but not the incorrect assignment
+

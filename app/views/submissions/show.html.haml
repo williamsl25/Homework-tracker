@@ -1,0 +1,73 @@
+.col-md-6.col-md-offset-3  
+  .text-center
+    %h3 Submissions
+
+  =@submission.name
+  %br
+  = link_to "Return to #{@assignment.name}", assignment_path(@assignment)
+  %br
+  .col-md-6.col-md-offset-3.text-center
+    .row
+      .list-group-item
+        = link_to "Edit Submission", edit_assignment_submission_path(@assignment, @submission)
+        |
+        = link_to "Delete Submission", assignment_submission_path(@assignment, @submission), method: :delete
+    %br
+    %br
+    .col-md-6.col-md-offset-3  
+      .text-center
+        .workflow
+          Current State:
+          %br
+            %strong
+              = @submission.workflow_state
+          %br
+            - if @submission.begin?
+              = link_to "Submit", submit_assignment_submission_path(@assignment, @submission), method: :patch
+              
+              = link_to "Review", review_assignment_submission_path(@assignment, @submission), method: :patch
+
+              = link_to "Complete", complete_assignment_submission_path(@assignment, @submission), method: :patch
+            - if @submission.submit?
+              = link_to "Review", review_assignment_submission_path(@assignment, @submission), method: :patch
+              
+              = link_to "Complete", complete_assignment_submission_path(@assignment, @submission), method: :patch
+            -if @submission.review?
+              = link_to "Submit", submit_assignment_submission_path(@assignment, @submission), method: :patch
+              
+              = link_to "Complete", complete_assignment_submission_path(@assignment, @submission), method: :patch
+    %br
+    .list-group-item
+      %strong Content:
+      %br
+      = @submission.content
+      %br
+      %br
+      %strong Links:
+      %br
+      = link_to "Add Link", new_assignment_submission_link_path(@assignment, @submission)
+      %ul
+        - @links.each do |link|
+          %li
+          = link_to link.url, assignment_submission_link_path(@assignment, @submission, link)
+    %br
+    .col-md-6.col-md-offset-3  
+      .text-center
+        Comments:
+        %ul
+        - @comments.each do |comment|
+          %li
+            = comment.content
+            |
+            = comment.user.email
+            |
+            = link_to "Delete_comment", destroy_comment_assignment_submission_path(@submission, comment), method: :delete
+        %br
+      .list-group-item
+        Add Comment:
+        = form_for @comment, url: create_comment_assignment_submission_path(@assignment, @submission) do |f|
+          .form-group
+            = f.label :content
+            = f.text_area :content, class: "form-control"
+            %br
+            = f.submit "Submit comment", class: "btn btn-primary"

@@ -1,0 +1,41 @@
+.row
+  .col-md-6.col-md-offset-3
+    = link_to "Back to assignments", assignments_path
+    .list-group-item
+      .text-center
+        %h4
+          = @assignment.name
+        
+        %strong Requirements:
+        %ul
+        = @assignment.requirements
+        %br
+    / this can is used to access the abilities
+    -if can? :update, @assignment
+      = link_to "Edit", edit_assignment_path(@assignment)
+    -if can? :destroy, @assignment
+      = link_to "Delete", assignment_path(@assignment), method: :delete 
+    .list-group-item
+      .text-center
+        %strong
+          Assignment Comments:
+        %ul
+        - @assignment.comments.each do |comment|
+          %li
+            = comment.content
+            |
+            =link_to "Delete Comment", destroy_comment_assignment_path(comment), method: :delete
+      %br
+      = form_for @comment, url: create_comment_assignment_path(@assignment) do |f|
+        .form-group
+          .text-center
+            = f.label :content, "Add Comment:"
+          = f.text_area :content, class: "form-control"
+          %br
+          .text-center
+            = f.submit "Submit Comment", class: "btn btn-primary"
+    .list-group-item
+      .text-center
+        %strong
+        = link_to "Submit an Assignment", assignment_submissions_path(@assignment)
+      %br

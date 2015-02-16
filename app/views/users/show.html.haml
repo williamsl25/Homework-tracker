@@ -1,0 +1,27 @@
+= link_to "Back to Users Main Page", users_path
+.col-md-6.col-md-offset-3  
+  .text-center
+    %h3 
+      = @user.first_name
+      = @user.last_name
+
+    = link_to "Edit", edit_user_path(@user)
+    |
+    = link_to "Delete", user_path(@user), method: :delete
+    %br
+    
+.list-group-item
+  .text-center
+    %br
+    email:
+    = @user.email
+    %br
+    github:
+    = link_to @user.github, "http://www.github.com/#{@user.github}", target: "_blank"
+    %br
+    Admin rights?
+    - if @user.admin_status == true
+      = "yes"
+    - if @user.admin_status == false
+      = "no"
+    

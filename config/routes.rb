@@ -1,18 +1,32 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { sessions: "users/sessions" }
+  resources :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   root 'welcome#index'
-  resources :users 
-  resources :assignments
+
+
+  resources :courses
+    
   resources :locations 
 
-  resources :courses do
+  resources :assignments do
     member do
       post :create_comment
       delete :destroy_comment
+    end
+    resources :submissions do
+      member do
+        post :create_comment
+        delete :destroy_comment
+        patch :begin
+        patch :submit
+        patch :review
+        patch :complete
+      end
+      resources :links
     end
   end
   # Example of regular route:

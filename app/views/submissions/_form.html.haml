@@ -1,0 +1,15 @@
+= form_for [@assignment, @submission] do |f|
+  - if @submission.errors.any?
+    - @submission.errors.full_messages.each do |message|
+      = message
+      %br
+.div
+  = form_for [@assignment, @submission] do |f|
+    .form-group
+      %strong= f.label :name
+      = f.text_field :name, class: "form-control name_field"
+    .form-group
+      = f.label :content
+      = f.text_area :content, class: "form-control"
+    .form-group
+      = f.submit "Submit", class: "btn btn-primary"   

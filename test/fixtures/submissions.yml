@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  assignment_id: 1
+  user_id: 1
+  workflow_state: MyString
+
+two:
+  name: MyString
+  assignment_id: 1
+  user_id: 1
+  workflow_state: MyString

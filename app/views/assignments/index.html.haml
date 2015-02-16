@@ -1,0 +1,18 @@
+= link_to 'Welcome', root_path 
+.col-md-6.col-md-offset-3
+  .text-center
+    %h2
+      Assignments 
+      %br
+    = link_to "Add an Assignment", new_assignment_path
+- @assignments.each do |assignment|
+  .col-md-4
+    .list-group-item
+      .text-center
+        = link_to assignment.name, assignment_path(assignment)
+        / link goes to assign show page
+        %br
+        = link_to 'Edit', edit_assignment_path(assignment)
+        %br
+        = link_to 'Delete Assignment', assignment_path(assignment), method: :delete
+        %br 

@@ -28,6 +28,8 @@ gem 'quiet_assets'
 gem 'devise'
 gem 'workflow'
 gem 'jquery-turbolinks'
+gem "nested_form"
+gem 'cancancan', '~> 1.10'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

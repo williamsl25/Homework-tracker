@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150210192851) do
+ActiveRecord::Schema.define(version: 20150216010500) do
 
   create_table "assignments", force: :cascade do |t|
     t.string   "name",         limit: 255
@@ -38,6 +38,20 @@ ActiveRecord::Schema.define(version: 20150210192851) do
     t.datetime "updated_at",                null: false
   end
 
+  create_table "links", force: :cascade do |t|
+    t.text     "url",           limit: 65535
+    t.integer  "submission_id", limit: 4
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  create_table "location_course_users", force: :cascade do |t|
+    t.integer  "user_id",            limit: 4
+    t.integer  "location_course_id", limit: 4
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
   create_table "location_courses", force: :cascade do |t|
     t.integer  "location_id", limit: 4
     t.integer  "course_id",   limit: 4
@@ -50,6 +64,16 @@ ActiveRecord::Schema.define(version: 20150210192851) do
     t.string   "address",    limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+  end
+
+  create_table "submissions", force: :cascade do |t|
+    t.string   "name",           limit: 255
+    t.integer  "assignment_id",  limit: 4
+    t.integer  "user_id",        limit: 4
+    t.string   "workflow_state", limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.text     "content",        limit: 65535
   end
 
   create_table "users", force: :cascade do |t|
@@ -69,6 +93,7 @@ ActiveRecord::Schema.define(version: 20150210192851) do
     t.string   "last_name",              limit: 255
     t.string   "github",                 limit: 255
     t.boolean  "admin_status",           limit: 1
+    t.string   "role",                   limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
