@@ -1,0 +1,20 @@
+= link_to 'Welcome', root_path 
+|
+= link_to "Return to #{@submission.name} submission", assignment_submission_path(@assignment, @submission)
+.col-md-6.col-md-offset-3
+  .text-center
+    %h2
+      List of Links 
+      %br
+- @links.each do |link|
+  .col-md-4
+    .list-group-item
+      .text-center
+        = link_to link.url, assignment_submission_link_path(@assignment, @submission, link) 
+        %br
+        = link_to "Edit", edit_assignment_submission_link_path(@assignment, @submission, link)
+        = link_to "Delete", assignment_submission_link_path(@assignment, @submission, link), method: :delete
+
+
+/= link_to "Add Link", new_assignment_submission_link_path(@assignment, @submission, link)
+

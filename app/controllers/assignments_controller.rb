@@ -19,7 +19,6 @@ class AssignmentsController < ApplicationController
     @user = current_user
     if @user.admin_status
       @assignment = Assignment.new
-      @submissions = Submission.all
     else 
       flash[:notice] = "You are not authorized to add an assignment"
       redirect_to assignments_path
@@ -40,9 +39,7 @@ class AssignmentsController < ApplicationController
     @user = current_user
     if @user.admin_status
       @assignment = Assignment.create assignment_params
-      @submissions = Submission.all
       @assignment.user = @user
-
       if @assignment.save
         flash[:notice] = "#{@assignment.name} information successsfully saved."
         redirect_to assignments_path
@@ -59,7 +56,21 @@ class AssignmentsController < ApplicationController
   def create_comment
     @assignment = Assignment.find params[:id]
     @comment = @assignment.comments.create comment_params
-    redirect_to assignment_path(@assignment)
+    @comment.user = current_user
+    @comment.save
+    # if @comment.save
+    #   UserMailer.comment_email(current_user, @comment).deliver
+    #   UserMailer.assignment_user_comment_email(@assignment, @comment).deliver
+      redirect_to assignment_path(@assignment)
+    # else
+    #   render :new
+    # end
+  end
+  def destroy_comment
+    @comment = Comment.find params[:id]
+    @comment.destroy
+    redirect_to assignment_path(@comment.commentable)
+    # redirect_to @comment.commentable
   end
 
   def edit
@@ -98,14 +109,6 @@ class AssignmentsController < ApplicationController
       redirect_to assignments_path
     end
   end
-
-  def destroy_comment
-    @comment = Comment.find params[:id]
-    @comment.destroy
-    redirect_to assignment_path(@comment.commentable)
-    # redirect_to @comment.commentable
-  end
-
 
   private
   def assignment_params

@@ -55,3 +55,16 @@ gem 'jquery-turbolinks'
 
 # Homework-tracker
 # Homework-tracker
+
+testing-
+in gemfile under group:development, :test do
+gem 'rspec-rails', '~> 3.0'
+rails generate rspec:install
+spec folder - 
+  This adds the following files which are used for configuration:
+    .rspec
+    spec/spec_helper.rb
+    spec/rails_helper.rb 
+create new folder for models:
+  *to test assignment model - add a spec.rb file
+    assignment_spec.rb

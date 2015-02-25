@@ -1,12 +1,13 @@
-= form_for [@submission, @assignment] do |f|
+= form_for [@assignment] do |f|
   - if @assignment.errors.any?
     - @assignment.errors.full_messages.each do |message|
       = message
       %br
 .div
-  = form_for [@submission, @assignment] do |f|
+  = form_for [@assignment] do |f|
     .form-group
-      %strong= f.label :name
+      %strong 
+        = f.label :name
       = f.text_field :name, class: "form-control name_field"
       %span.error_first_name
         Name required
@@ -14,17 +15,5 @@
     .form-group
       = f.label :requirements
       = f.text_field :requirements, class: "form-control"
-    %br
-    .list-group-item
-      %strong
-        Add a submission to assignment List:
-        %br
-        - @submissions.each do |submission|
-          .form-group
-            %strong= f.label :name
-            = f.text_field :name, class: "form-control name_field"
-            = check_box_tag 'assignment[submission_ids][]', submission.id, @assignment.submissions.include?(submission)
-            = submission.name 
-          %br
-      = f.submit "Submit", class: "submit_btn"
-      = link_to "Cancel", assignments_path
+    = f.submit "Submit", class: "submit_btn"
+    = link_to "Cancel", assignments_path

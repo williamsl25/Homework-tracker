@@ -1,6 +1,8 @@
 class LinksController < ApplicationController
   def index
-    
+    @assignment = Assignment.find params[:assignment_id]
+    @submission = Submission.find params[:submission_id]
+    @links = @submission.links
   end
 
   def new

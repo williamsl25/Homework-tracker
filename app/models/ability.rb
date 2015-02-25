@@ -8,9 +8,12 @@ class Ability
             can :manage, :all
         else 
             can :read, :all
+            can :show, Submission
+            can :update, Submission
             can :create, Comment
             can :update, Comment do |comment|
             comment.try(:user) == user
+            can :destroy, Comment
         end
     end
     end 

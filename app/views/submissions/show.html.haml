@@ -1,11 +1,11 @@
 .col-md-6.col-md-offset-3  
   .text-center
     %h3 Submissions
-
-  =@submission.name
-  %br
   = link_to "Return to #{@assignment.name}", assignment_path(@assignment)
+  .text-center
+    =@submission.name
   %br
+  
   .col-md-6.col-md-offset-3.text-center
     .row
       .list-group-item
@@ -20,22 +20,25 @@
           Current State:
           %br
             %strong
-              = @submission.workflow_state
+              / = @submission.workflow_state
+              = workflow_state_helper_method(@submission)
           %br
-            - if @submission.begin?
-              = link_to "Submit", submit_assignment_submission_path(@assignment, @submission), method: :patch
+            - if can? :update, @submission
+              = submission_state?(@submission)
+            / - if @submission.begin?
+            /   = link_to "Submit", submit_assignment_submission_path(@assignment, @submission), method: :patch
               
-              = link_to "Review", review_assignment_submission_path(@assignment, @submission), method: :patch
+            /   = link_to "Review", review_assignment_submission_path(@assignment, @submission), method: :patch
 
-              = link_to "Complete", complete_assignment_submission_path(@assignment, @submission), method: :patch
-            - if @submission.submit?
-              = link_to "Review", review_assignment_submission_path(@assignment, @submission), method: :patch
+            /   = link_to "Complete", complete_assignment_submission_path(@assignment, @submission), method: :patch
+            / - if @submission.submit?
+            /   = link_to "Review", review_assignment_submission_path(@assignment, @submission), method: :patch
               
-              = link_to "Complete", complete_assignment_submission_path(@assignment, @submission), method: :patch
-            -if @submission.review?
-              = link_to "Submit", submit_assignment_submission_path(@assignment, @submission), method: :patch
+            /   = link_to "Complete", complete_assignment_submission_path(@assignment, @submission), method: :patch
+            / -if @submission.review?
+            /   = link_to "Submit", submit_assignment_submission_path(@assignment, @submission), method: :patch
               
-              = link_to "Complete", complete_assignment_submission_path(@assignment, @submission), method: :patch
+            /   = link_to "Complete", complete_assignment_submission_path(@assignment, @submission), method: :patch
     %br
     .list-group-item
       %strong Content:
@@ -61,7 +64,7 @@
             |
             = comment.user.email
             |
-            = link_to "Delete_comment", destroy_comment_assignment_submission_path(@submission, comment), method: :delete
+            = link_to "Delete comment", destroy_comment_assignment_submission_path(@submission, comment), method: :delete
         %br
       .list-group-item
         Add Comment:
