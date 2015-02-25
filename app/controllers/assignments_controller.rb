@@ -57,14 +57,14 @@ class AssignmentsController < ApplicationController
     @assignment = Assignment.find params[:id]
     @comment = @assignment.comments.create comment_params
     @comment.user = current_user
-    @comment.save
-    # if @comment.save
-    #   UserMailer.comment_email(current_user, @comment).deliver
-    #   UserMailer.assignment_user_comment_email(@assignment, @comment).deliver
+    
+    if @comment.save
+      UserMailer.comment_email(current_user, @comment).deliver
+      UserMailer.assignment_user_comment_email(@assignment, @comment).deliver
       redirect_to assignment_path(@assignment)
-    # else
-    #   render :new
-    # end
+    else
+      render :new
+    end
   end
   def destroy_comment
     @comment = Comment.find params[:id]

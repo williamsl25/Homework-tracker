@@ -43,7 +43,7 @@ class SubmissionsController < ApplicationController
     @comment.user = current_user
     if @comment.save
     @comment.save
-      UserMailer.comment_email(current_user, @comment.deliver)
+      UserMailer.comment_email(current_user, @comment).deliver
       UserMailer.submission_user_comment_email(@submission, @comment).deliver
 
     redirect_to assignment_submission_path(@assignment, @submission)

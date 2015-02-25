@@ -1,7 +1,7 @@
 class UserMailer < ApplicationMailer
-  default to: Proc.new { LocationCourseUser.pluck(:user_id) },
-          from: 'notifications@localhost.com'
+  default from: 'notifications@localhost.com'
 
+          
   def comment_email(user, comment)
     @user = user
     @comment = comment
@@ -12,14 +12,13 @@ class UserMailer < ApplicationMailer
   def assignment_user_comment_email(assignment, comment)
     @comment = comment
     @assignment = assignment
-    mail(to: assignment.user.email, subject: "Comment Notification")
+    mail(to: assignment.user.email, subject: "Assignment Comment Notification")
   end
 
   def submission_user_comment_email(submission, comment)
     @comment = comment
     @submission = submission
-    mail(to: submission.user.email, subject: "Comment Notification")
+    mail(to: submission.user.email, subject: "Submission Comment Notification")
   end
-
 
 end
