@@ -7,18 +7,18 @@ describe "user registration", type: :feature, js: true do
     fill_in "First name", with: "Jo"
     fill_in "Last name", with: "Johnson"
     fill_in "Github", with: "johson"
-    fill_in "Email", with: "jo@gmail.com"
+    fill_in "Email", with: "j@gmail.com"
     fill_in "Password", with: "password"
     fill_in "Password confirmation", with: "password"
     click_button "Sign up"
     expect(page).to have_content("Welcome! You have signed up successfully.")
-    expect(page).to have_content("Logout: jo@gmail.com")
+    expect(page).to have_content("Logout: j@gmail.com")
     save_and_open_page
   end
   it 'should sign in successfully' do
     visit root_path
     click_link "Login"
-    fill_in 'Email', with: "jo@gmail.com"
+    fill_in 'Email', with: "j@gmail.com"
     fill_in 'Password', with: "password"
     click_button "Log in"
     expect(page).to have_content("Signed in successfully.")
@@ -28,7 +28,7 @@ describe "user registration", type: :feature, js: true do
   it 'should not sign in successfully' do
     visit root_path
     click_link "Login"
-    fill_in 'Email', with: "jo@gmail.com"
+    fill_in 'Email', with: "j@gmail.com"
     click_button "Log in"
     expect(page).to have_content("Invalid email or password.")
   end
@@ -42,6 +42,18 @@ describe "user registration", type: :feature, js: true do
     expect(page).to have_content("Password can't be blank")
     # save_and_open_page
   end
-  
-  
+  FactoryGirl.create(:user)
+  it 'should sign in successfully' do
+    # FactoryGirl.create(:user)
+    visit root_path
+    click_link "Login"
+    fill_in 'Email', with: "test@test.com"
+    fill_in 'Password', with: "password"
+    click_button "Log in"
+    save_and_open_screenshot
+    expect(page).to have_content("Signed in successfully.")
+    expect(page).not_to have_content("Login")
+    expect(page).not_to have_content("Register")
+  end
+
 end
