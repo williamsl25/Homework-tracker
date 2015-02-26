@@ -68,3 +68,29 @@ spec folder -
 create new folder for models:
   *to test assignment model - add a spec.rb file
     assignment_spec.rb
+*to get the database to clear out after each test: 
+1)install gem 'database_cleaner'
+2)in spec/rails_helper
+  change config.use_transactional_fixtures = true
+  to false
+3)then in the spec/rails_helper include:
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, :js => true) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+*to get factory girl objects to be created  =>remove turbolinks gem from gemfile and the =require turbolinks in application.js as well in the layouts head-turbolinks links 

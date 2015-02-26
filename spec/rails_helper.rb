@@ -40,7 +40,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   config.include FactoryGirl::Syntax::Methods
   # RSpec Rails can automatically mix in different behaviours to your tests
@@ -57,4 +57,25 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+# this says that before the entire test suite runs, clear the test database out completely. This gets rid of any garbage left over from interrupted or poorly-written tests—a common source of surprising test behavior
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+# sets the default database cleaning strategy to be transactions. Transactions are very fast, and for all the tests where they do work—that is, any test where the entire test runs in the RSpec process—they are preferable.
+  config.before(:each, :js => true) do
+    DatabaseCleaner.strategy = :truncation
+  end
+# This line only runs before examples which have been flagged :js => true. By default, these are the only tests for which Capybara fires up a test server process and drives an actual browser window via the Selenium backend. For these types of tests, transactions won’t work, so this code overrides the setting and chooses the “truncation” strategy instead.
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+# These lines hook up database_cleaner around the beginning and end of each test, telling it to execute whatever cleanup strategy we selected beforehand.
 end
