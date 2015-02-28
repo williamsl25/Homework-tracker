@@ -19,18 +19,13 @@ class CoursesController < ApplicationController
       flash[:error] = 'Course NOT successfully saved.'
       render :new
     end
-  end
-
-  def create_comment
-    @course = Course.find params[:id]
-    @comment = @course.comments.create comment_params
-    redirect_to course_path(@course)
+  # else covers the validation of name must be filled in
   end
 
   def show
     @course = Course.find params[:id]
     @locations = @course.locations
-    @comment = Comment.new
+    
   end
 
   def edit
@@ -41,7 +36,8 @@ class CoursesController < ApplicationController
   def update
     @locations = Location.all 
     @course = Course.find params[:id]
-    if @course.update course_params
+    @course.update_attributes course_params
+    if @course.save
       flash[:notice] = "#{@course.name} information successfully updated."
       redirect_to course_path(@course)
     else
@@ -53,15 +49,10 @@ class CoursesController < ApplicationController
   def destroy
     @course = Course.find params[:id]
     @course.delete
-    flash[:notice] = "#{@course.name}"
+    flash[:notice] = "#{@course.name} was deleted"
     redirect_to courses_path
   end
 
-  def destroy_comment
-    @comment = Comment.find params[:id]
-    @comment.destroy
-    redirect_to @comment.commentable
-  end
 
   private 
 
@@ -73,9 +64,5 @@ class CoursesController < ApplicationController
     )
   end
 
-  def comment_params
-    params.require(:comment).permit(
-      :content
-      )
-  end
+  
 end
