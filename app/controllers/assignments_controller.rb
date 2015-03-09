@@ -1,7 +1,7 @@
 class AssignmentsController < ApplicationController
   # load_and_authorize_resource
   # will restrict user if they don't have access 
-  before_action :authenticate_user!
+  
   # checks to make sure you are logged in before you can do anything
   def index
     @assignments = Assignment.all
