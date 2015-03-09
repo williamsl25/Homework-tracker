@@ -3,7 +3,7 @@ create new project:
   inside - rvm 2.2@williamsl25_homework --create
 2) go in and out in terminal
 3) gem install rails
-4) rails new .
+4) rails new . -d mysql (will auto make db mysql)
 5) in database.yml - add adapter: mysql2 => add db name: name_db_development, name_db_production, name_db_test 
 6) gemfile: add gems  
 gem 'mysql2'

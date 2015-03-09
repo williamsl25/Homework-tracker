@@ -38,7 +38,15 @@
     %i (we need your current password to confirm your changes)
     %br/
     = f.password_field :current_password, autocomplete: "off"
+    %br
+    .form-group
     
+      = f.label :admin_status
+      = f.radio_button(:admin_status, 1)
+      = f.label(:admin_status, "yes")
+      = f.radio_button(:admin_status, 0)
+      = f.label(:admin_status, "no")
+      %br
     / put select a location and what course offered here
 
   .actions

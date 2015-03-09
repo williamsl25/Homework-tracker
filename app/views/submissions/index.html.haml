@@ -12,7 +12,7 @@
         %br
         = link_to "Edit submisssion", edit_assignment_submission_path(@assignment, submission)
         |
-        = link_to "Delete submisssion", assignment_submissions_path(@assignment), method: :delete
+        = link_to "Delete submisssion", assignment_submission_path(@assignment, submission), method: :delete
         %br
   / all the submissions show up-not just the submissions for the specific assignment.  If you click the links for the submissions, they work for the correct assignment, but not the incorrect assignment
 
